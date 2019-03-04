@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="dao.ReviewReplyDao">
+
+	<insert id="insertReply" parameterType="map">
+		INSERT 
+		  INTO re_reply
+				(num, board_num, replycontent, replydate)
+		VALUES (re_reply_seq.nextval, #{board_num} ,#{replycontent}, sysdate)
+	</insert>
+	
+	<select id="selectOne" parameterType="int" resultType="map">
+		SELECT * 
+		  FROM re_reply 
+		 WHERE num = #{num}
+	</select>
+	
+	<select id="selectByBoardNum" parameterType="int" resultType="map">
+		SELECT * 
+		  FROM re_reply 
+		 WHERE board_num = #{board_num}
+	</select>
+
+</mapper>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="dao.TravleReviewDao">
+
+
+	<insert id="insertReview" parameterType="map">
+		<selectKey order="BEFORE" keyProperty="NUM" resultType="int">
+			select review_seq.nextval from dual
+		</selectKey>
+		INSERT
+		INTO tra_review
+		(num,title,travle,backimg,content,reviewdate)
+		VALUES (#{NUM},#{title},#{travle},#{backimg},#{content},sysdate)
+	</insert>
+
+
+	<select id="selectOne" parameterType="int" resultMap="reviewMap">
+		SELECT *
+		FROM tra_review
+		WHERE num = #{NUM}
+	</select>
+	<resultMap type="HashMap" id="reviewMap">
+		<result property="content" column="content" jdbcType="CLOB" javaType="java.lang.String" />
+	</resultMap>
+
+
+	<select id="selectAll" resultType="map">
+		SELECT *
+		FROM tra_review
+	</select>
+
+
+</mapper>
