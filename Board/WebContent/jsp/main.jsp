@@ -135,7 +135,7 @@
   
 		<!-- Nav-Main -->
 		<ul class="nav nav-tabs" role="tablist" id="navBar">
-			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu">후기</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu">후기123</a></li>
 		</ul>
 			
 		<div id="menu" class="container tab-pane fade" style="visibility: visible;">
