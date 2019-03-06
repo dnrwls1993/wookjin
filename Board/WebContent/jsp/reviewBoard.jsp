@@ -13,6 +13,30 @@
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
   crossorigin="anonymous"></script>
 
+<script type="text/javascript">
+	$(function() {
+		var boardTable = $("#withReview");
+		$("#withReview tr:gt(0)").remove();
+		$.ajax({
+			url : "${contextPath}/review/withBoard",
+			type : "get",
+			dataType : "json",
+			success : function(data) {
+				for(var i in data) {
+					var tr = $("<tr>");
+					var href = $("<a href='#' style='text-decoration: none;'>신고</a>");
+					$("<td style='text-align: center; border: 1px solid #cccccc;'>").text(data[i].NUM).appendTo(tr);
+					$("<td style='border: 1px solid #cccccc;'>").text(data[i].AVGSCORE).appendTo(tr);
+					$("<td style='border: 1px solid #cccccc;'>").text(data[i].WITHCONTENT).appendTo(tr);
+					$("<td style='border: 1px solid #cccccc; text-align: center;'>").append(href).appendTo(tr);
+					
+					tr.appendTo(boardTable);
+				}
+			}
+		});
+	});
+</script>
+
 
 <style type="text/css">
 	
@@ -29,7 +53,7 @@
 		height: 350px;
 	}
 	
-	#replyList {
+	#withReview {
 		float: right;
 		width: 800px;
 	}
@@ -52,7 +76,8 @@
 
 
 <body>
-<form action="withBoard" method="get">
+<form action="withWriteForm" method="get">
+
 	<div class="container">
 		<div class="tab-content">
 			
@@ -86,54 +111,34 @@
 			
 			<button type="button" class="btn btn-primary" id="btnSave" style="float: right;" onclick="location.href='withWriteForm'">후기올리기</button>
 		</div>
+		
 		<br><br><br>
-		<table class="table table-bordered" id="replyList">
-    		<thead>
-      			<tr>
-        			<th>닉네임</th>
-        			<th>평점</th>
-        			<th>후기내용</th>
-      			</tr>
-    		</thead>
-    		<tbody>	
-      			<tr>
-        			<td><a href="reviewView02.jsp">user1</a></td>
-        			<td>4 / 5</td>
-        			<td>너무 즐거웠어요</td>
-      			</tr>
-      			<tr>
-        			<td>user2</td>
-        			<td>3 / 5</td>
-        			<td>다음에 또 봐요~</td>
-      			</tr>
-      			<tr>
-        			<td>user3</td>
-        			<td>4 / 5</td>
-        			<td>짱짱</td>
-      			</tr>
-      			<tr>
-        			<td>user4</td>
-        			<td>5 / 5</td>
-        			<td>2일차 점심 너무 맛있었어요</td>
-      			</tr>
-      			<tr>
-        			<td>user5</td>
-        			<td>4 / 5</td>
-        			<td>다음엔 어디로 갈까요</td>
-      			</tr>
-    		</tbody>
+		
+		<!---------------------------------- 동행후기 리스트 시작 ---------------------------------->
+		<table class="table table-bordered" id="withReview">
+      			<tr style="border: 1px solid #cccccc;">
+        			<th style="width: 130px; border: 1px solid #cccccc; text-align: center;">닉네임</th>
+        			<th style="width: 130px; border: 1px solid #cccccc; text-align: center;">평점</th>
+        			<th style="width: 130px; border: 1px solid #cccccc; text-align: center;">후기내용</th>
+        			<th style="float: right;"></th>
+      			</tr>    		
   		</table>
+  		<!---------------------------------- 동행후기 리스트 끝 ---------------------------------->
+  		
+  		<!---------------------------------- 동행후기 리스트 페이징 시작 ---------------------------------->
   		<div align="center">
-  				<ul class="pagination justify-content-center">
-    				<li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
-    				<li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
-    				<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
-    				<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
-    				<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
-    				<li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
-    				<li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
-  				</ul>
+  			<ul class="pagination justify-content-center">
+    			<li class="page-item"><a class="page-link" href="javascript:void(0);">Previous</a></li>
+    			<li class="page-item"><a class="page-link" href="javascript:void(0);">1</a></li>
+    			<li class="page-item"><a class="page-link" href="javascript:void(0);">2</a></li>
+    			<li class="page-item"><a class="page-link" href="javascript:void(0);">3</a></li>
+    			<li class="page-item"><a class="page-link" href="javascript:void(0);">4</a></li>
+    			<li class="page-item"><a class="page-link" href="javascript:void(0);">5</a></li>
+    			<li class="page-item"><a class="page-link" href="javascript:void(0);">Next</a></li>
+  			</ul>
   		</div>
+  		<!---------------------------------- 동행후기 리스트 페이징 끝 ---------------------------------->
+  		
 	</div>
 </form>
 </body>

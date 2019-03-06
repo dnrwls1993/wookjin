@@ -37,4 +37,9 @@ public class WithReviewService implements IWithReviewService{
 		return dao.selectAll();
 	}
 
+	@Override
+	public List<Map<String, Object>> getWithBoard(int with_board_num) {
+		return dao.selectByWithBoardNum(with_board_num);
+	}
+
 }

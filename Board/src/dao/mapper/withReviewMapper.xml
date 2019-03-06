@@ -12,8 +12,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		</selectKey>
 		INSERT
 		  INTO with_review
-		  (withnum,avgscore,withcontent,withdate)
-		VALUES (#{NUM},#{avgscore},#{withcontent},sysdate)
+		  (withnum,with_board_num,avgscore,withcontent,withdate)
+		VALUES (#{NUM},#{with_board_num},#{avgscore},#{withcontent},sysdate)
 	</insert>
 	
 	<select id="selectOne" parameterType="int" resultMap="withMap">
@@ -30,4 +30,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM with_review
 	</select>
 	
+	<select id="selectByWithBoardNum" parameterType="int" resultType="map">
+		SELECT * 
+		  FROM with_review 
+		 WHERE with_board_num = #{with_board_num}
+	</select>
 </mapper>

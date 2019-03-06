@@ -104,7 +104,7 @@
 <header class="hidden-xs" id="header">
     <div class="container">
        <div style="text-align: center;">
-			<h1><a id="nickName" href="main" style="text-decoration: none;">라온다님112321</a></h1>
+			<h1><a id="nickName" href="main" style="text-decoration: none;">라온다님</a></h1>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	        <ul class="nav navbar-nav navbar-right" style="display: inline; float: right;">
@@ -135,7 +135,7 @@
   
 		<!-- Nav-Main -->
 		<ul class="nav nav-tabs" role="tablist" id="navBar">
-			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu">후기123</a></li>
+			<li class="nav-item"><a class="nav-link" data-toggle="tab" href="#menu">후기</a></li>
 		</ul>
 			
 		<div id="menu" class="container tab-pane fade" style="visibility: visible;">

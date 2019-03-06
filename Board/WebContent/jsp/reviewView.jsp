@@ -142,8 +142,10 @@
 				<i class="fas fa-cloud" style="font-size:38px;color:aqua;"></i>
 				${review.NUM}님의 여행후기입니다
 			</h3>
+			
 			<button type="button" class="btn btn-primary" id="btnList" onclick="location.href='main'">후기 목록</button>
 			
+			<!------------ 등록한 정보 출력 시작 ------------>
 				<div class="form-group" id="form-group">
 					<label for="inputlg">제목</label> 
 					<input class="form-control input-lg" id="inputlg" type="text" readonly="readonly" value="${review.TITLE}">
@@ -160,12 +162,16 @@
 						${review.content}
 					</div>
 				</div>
+			<!------------ 등록한 정보 출력 끝 ------------>
+				
 			</div>
 		</div>	
 </form>
 
 <div class="container">
 		<div class="tab-content">
+		
+		<!------------ 댓글 리스트 시작 ------------>
 			<table class="table table-striped" id="replies">
       				<tr style="border: 1px solid #cccccc;">
         				<th style="width: 130px; border: 1px solid #cccccc; text-align: center;">닉네임</th>
@@ -173,66 +179,58 @@
         				<th style="float: right;"></th>
       				</tr>
   			</table>
+  		<!------------ 댓글 리스트 끝 ------------>	
   			
-  			
+  		<!------------ 댓글 리스트 페이징 시작 ------------>
   			<div align="center">
-  			
   				<ul class="pagination justify-content-center">
-  				
   					<li class="page-item">
     					<a class="page-link" href="javascript:void(0);">
     						Previous
     					</a>
     				</li>
-    				
-    				
     				<li class="page-item">
     					<a class="page-link" href="javascript:void(0);">
     						1
     					</a>
     				</li>
-    				
     				<li class="page-item">
     					<a class="page-link" href="javascript:void(0);">
     						2
     					</a>
     				</li>
-    				
     				<li class="page-item">
     					<a class="page-link" href="javascript:void(0);">
     						3
     					</a>
     				</li>
-    				
     				<li class="page-item">
     					<a class="page-link" href="javascript:void(0);">
     						4
     					</a>
     				</li>
-    				
     				<li class="page-item">
     					<a class="page-link" href="javascript:void(0);">
     						5
     					</a>
     				</li>
-    				
     				<li class="page-item">
     					<a class="page-link" href="javascript:void(0);">
     						Next
     					</a>
     				</li>
-    				
   				</ul>
   			</div>
-
-			
-
-  			
+			<!------------ 댓글 리스트 페이징 끝 ------------>
+	
+  			<!------------ 댓글 달기 시작 ------------>
   			<form name="replyForm" id="replyForm" method="post" action="#">
   				<input type="hidden" name="board_num" value="${review.NUM}">
   				<input type="text" class="form-control form-control-sm" placeholder="댓글을 입력하세요" id="inputReply" name="replycontent">
 				<input type="submit" class="btn btn-primary" id="btnSave" value="등록">
 			</form>
+			<!------------ 댓글 달기 끝 ------------>
+			
 		</div>	
 	</div>
 	<br><br><br><br><br>

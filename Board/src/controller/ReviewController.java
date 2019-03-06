@@ -1,11 +1,18 @@
 package controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -91,12 +98,20 @@ public class ReviewController {
 //------------------------------ 동행 후기 시작 --------------------------------------//
 	//회원 동행 후기 게시판
 	@RequestMapping("/withBoard")
-	public String withBoard(Model model,
+	public String withBoard(Model model, 
+			HttpServletRequest req,
 			int num) {
-		System.out.println("회원의 여행후기");
-		Map<String, Object> rev = service.selectOne(num);
-		System.out.println(rev);
-		model.addAttribute("review", rev);
+
+		System.out.println(num + "회원의 동행 후기");
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("num", num);
+		int with_board_num = num;
+		Map<String, Object> rev1 = service.selectOne(num);
+		List<Map<String, Object>> rev2 = withService.getWithBoard(with_board_num);
+		model.addAttribute("review", rev1);
+		model.addAttribute("withReview", rev2);
+		
 		return "reviewBoard"; 
 	}
 	
@@ -104,29 +119,35 @@ public class ReviewController {
 	@RequestMapping("/withWriteForm")
 	public String withWriteForm() {
 		System.out.println("동행 후기 작성");
-		return "redirect:withWrite";
+		return "withWrite";
 	}
 	
 	//여행 후기 작성
-	@RequestMapping("/withWrite")
+	@RequestMapping("/withWrite1")
 	public String withWrite(
-			@RequestParam(value="avgscore") int avgscore,
+			@RequestParam(required=false) int avgscore,
 			@RequestParam(value="withcontent") String withcontent,
-			RedirectAttributes ra
+			RedirectAttributes ra,
+			HttpServletRequest req
 			) {
-		System.out.println("동행후기를 작성하세요");
-			
+		System.out.println("동행후기 저장 중...");
+		HttpSession session = req.getSession();
+		
+		int num = (int) session.getAttribute("num");
+		
 		Map<String, Object> review = new HashMap<>();
 		review.put("avgscore", avgscore);
 		review.put("withcontent", withcontent);
-			
+		review.put("with_board_num", num);
+		
 		if(withService.insertWithReview(review)) {
 			System.out.println("작성 성공");
-			ra.addAttribute("num", review.get("NUM"));
+			ra.addAttribute("num", num);
 		} else {
 			System.out.println("작성 실패");
 		}
-		return "redirect:reviewBoard";
+		return "redirect:withBoard";
+		
 	}
 //------------------------------ 동행 후기 끝 --------------------------------------//
 	
