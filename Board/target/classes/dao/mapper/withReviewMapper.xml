@@ -35,4 +35,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		  FROM with_review 
 		 WHERE with_board_num = #{with_board_num}
 	</select>
+	
+	<select id="selectByWithNum" parameterType="int" resultType="map">
+		SELECT * 
+		  FROM with_review 
+		 WHERE withnum = #{NUM}
+	</select>
 </mapper>

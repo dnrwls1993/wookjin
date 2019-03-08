@@ -41,6 +41,10 @@
 		<property name="mapperInterface" value="dao.WithReviewDao"></property>
 		<property name="sqlSessionFactory" ref = "sqlSessionFactory"></property>
 	</bean>
+	<bean id = "withReviewReplyDao" class="org.mybatis.spring.mapper.MapperFactoryBean">
+		<property name="mapperInterface" value="dao.WithReviewReplyDao"></property>
+		<property name="sqlSessionFactory" ref = "sqlSessionFactory"></property>
+	</bean>
 	
 	
 	

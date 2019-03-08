@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper     
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"     
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="dao.WithReviewReplyDao">
+
+	<insert id="insertWithReply" parameterType="map">
+		INSERT 
+		  INTO wi_reply
+				(with_reply_num, with_review_board_num, with_replycontent, with_replydate)
+		VALUES (wi_reply_seq.nextval, #{with_review_board_num} ,#{with_replycontent}, sysdate)
+	</insert>
+	
+	<select id="selectOne" parameterType="int" resultType="map">
+		SELECT * 
+		  FROM wi_reply 
+		 WHERE with_reply_num = #{with_reply_num}
+	</select>
+	
+	<select id="selectByBoardNum" parameterType="int" resultType="map">
+		SELECT * 
+		  FROM wi_reply 
+		 WHERE with_review_board_num = #{with_review_board_num}
+	</select>
+
+</mapper>

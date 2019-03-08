@@ -85,7 +85,7 @@ public class ReviewController {
 			int num) {
 		System.out.println("리뷰보기");
 		Map<String, Object> rev = service.selectOne(num);
-		System.out.println(rev);
+//		System.out.println(rev);
 		model.addAttribute("review", rev);
 		return "reviewView"; 
 	}
@@ -97,10 +97,11 @@ public class ReviewController {
 	
 //------------------------------ 동행 후기 시작 --------------------------------------//
 	//회원 동행 후기 게시판
+	
 	@RequestMapping("/withBoard")
 	public String withBoard(Model model, 
 			HttpServletRequest req,
-			int num) {
+			@RequestParam (value="num") int num) {
 
 		System.out.println(num + "회원의 동행 후기");
 		
@@ -128,8 +129,7 @@ public class ReviewController {
 			@RequestParam(required=false) int avgscore,
 			@RequestParam(value="withcontent") String withcontent,
 			RedirectAttributes ra,
-			HttpServletRequest req
-			) {
+			HttpServletRequest req) {
 		System.out.println("동행후기 저장 중...");
 		HttpSession session = req.getSession();
 		
@@ -146,9 +146,40 @@ public class ReviewController {
 		} else {
 			System.out.println("작성 실패");
 		}
-		return "redirect:withBoard";
-		
+		return "redirect:reviewView02";
 	}
+	
+	//여행 후기 상세 페이지
+	@RequestMapping("/reviewView02")
+	public String reviewView02(Model model,
+			@RequestParam (value="num") int num,
+			@RequestParam (value="withnum") int withnum
+			) {
+		
+//		int withnum = num;
+
+		System.out.println(withnum + "님이 남긴" + " " + num + "의 동행 후기 게시판 보기");
+		
+		Map<String, Object> rev = service.selectOne(num);
+		model.addAttribute("review", rev);
+//		System.out.println("rev :"+rev);
+		
+//		List<Map<String, Object>> rev2 = withService.getWithBoard(withnum);
+//		model.addAttribute("withReview", rev2);
+//		System.out.println("rev2 :"+rev2);
+		
+//		Map<String, Object> rev4 = withService.selectWithNum(withnum);
+//		model.addAttribute("withReview", rev4);
+//		System.out.println("rev4 : " + rev4);
+		
+		Map<String, Object> rev3 = withService.selectOne(withnum);
+//		model.addAttribute("withnum", withnum);
+		model.addAttribute("withReview", rev3);
+		System.out.println("withReview :"+rev3);
+		 
+		return "reviewView02"; 
+	}
+	
 //------------------------------ 동행 후기 끝 --------------------------------------//
 	
 
