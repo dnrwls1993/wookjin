@@ -14,6 +14,27 @@
 <!--   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" -->
 <!--   crossorigin="anonymous"></script> -->
 
+<script type="text/javascript">
+
+	// ------------------- 별점 시작 ------------------- //
+	$(function(){
+		$(".starRev span").click(function(){
+	         var index = $(".starRev span").index(this);
+	         console.log(index+1);
+	         for(i=0; i<5; i++){
+	            
+	            $(this).parent().children('span').removeClass('on');
+	            $(this).addClass('on').prevAll('span').addClass('on');
+	         }
+	         $("#avgscore").val(index+1);
+
+	        return false;
+	      });	
+	});
+	// ------------------- 별점 끝 ------------------- // 
+	 
+</script>
+
 <style type="text/css">
 	#box {
   		float: left;  
@@ -40,17 +61,37 @@
 		width: 100px;
 		height: 100px;
 	}
-	#star {
-		font-size: 80px;
-		color: blue;
-	}
 	#btnSave {
 		width: 100px;
+		margin-left: 9%;
+	}
+	.starR{
+  		background: url('http://miuu227.godohosting.com/images/icon/ico_review.png') no-repeat right 0;
+  		background-size: auto 100%;
+  		width: 30px;
+  		height: 30px;
+  		display: inline-block;
+  		text-indent: -9999px;
+  		cursor: pointer; 
+	}
+	.starR.on{
+		background-position:0 0;
+	}
+	#star {
+		margin-left: 20px;
+		
+	}
+	#starCase {
+	  border: 1px solid #cccccc; 
+	  background-color: #eeeeee; 
+	  width: 800px; 
+	  float: right;
+	  margin-bottom: 10px;
 	}
 </style>
 </head>
 <body>
-<form id="withWrite" action="withWrite" method="post">
+<form id="withWrite" action="withWrite1" method="post">
 	<div class="container">
 		<div class="tab-content">
 			<h3>
@@ -81,65 +122,51 @@
 			</div>
 			<!----------------------------------------- 프로필 끝 -------------------------------------->
 			
-			<div class="dropdown dropright" id="star">
-    			<button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-      				평점을 선택하세요
-    			</button>
-    			<div class="dropdown-menu">
-      				<a class="dropdown-item" href="#">
-      					<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-      				</a>
-      				<a class="dropdown-item" href="#">
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-					</a>
-      				<a class="dropdown-item" href="#">
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-					</a>
-					<a class="dropdown-item" href="#">
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-					</a>
-					<a class="dropdown-item" href="#">
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-						<i class="glyphicon glyphicon-thumbs-up" id="star"></i>
-					</a>
-    			</div>
+			<br>
+			
+			<!----------------------------------------- 별점 시작 -------------------------------------->
+			<div id="starCase">
+				<h5 style="text-align: center;">
+					<b>별의 갯수로 평점을 남겨주세요</b>
+				</h5>
+				
+				<div class="starRev" style="text-align: center;" id="reviewScore">
+  					<span class="starR on" id="star">별1</span>
+  					<span class="starR" id="star">별2</span>
+  					<span class="starR" id="star">별3</span>
+  					<span class="starR" id="star">별4</span>
+  					<span class="starR" id="star">별5</span>	
+  					<input type="hidden" name="avgscore" id="avgscore" value="1">
+				</div>
   			</div>
+  			<!----------------------------------------- 별점 끝 -------------------------------------->
 			
-			<!-- Summernote -->
-			
+			<!---------------------- 섬머노트 시작 ---------------------->
 			<div style="float: right;">
-				<textarea rows="10" id="summernote" name="editor"></textarea>
+				<textarea rows="10" id="summernote" name="withcontent"></textarea>
 			</div>
-				<script type="text/javascript">
-					$('.summernote').summernote({
-						height : 500,
-						minHeight : null,
-						maxHeight : null,
-						lang : 'ko-KR',
-						onImageUpload : function(files, editor, welEditable) {
-							sendFile(files[0], editor, welEditable);
-						}
-					}); 
-					$('#summernote').summernote({
-						height : 500,
-						width : 800,
-						focus : true
-					});
-					$(document).ready(function() {
-						$('#summernote').summernote();
-					});
-				</script>
-				<input type="button" class="btn btn-primary" id="btnSave" onclick="location.href='reviewBoard'" value="등록">
+			<script type="text/javascript">
+				$('.summernote').summernote({
+					height : 500,
+					minHeight : null,
+					maxHeight : null,
+					lang : 'ko-KR',
+					onImageUpload : function(files, editor, welEditable) {
+						sendFile(files[0], editor, welEditable);
+					}
+				}); 
+				$('#summernote').summernote({
+					height : 500,
+					width : 800,
+					focus : true
+				});
+				$(document).ready(function() {
+					$('#summernote').summernote();
+				});
+			</script>
+			<!---------------------- 섬머노트 끝 ---------------------->
 			
+			<input type="submit" class="btn btn-primary" id="btnSave" value="등록">
 		</div>
 	</div>
 </form>

@@ -17,8 +17,8 @@ public class WithReviewService implements IWithReviewService{
 	@Override
 	public boolean insertWithReview(Map<String, Object> param) {
 		System.out.println("서비스 도착");
-		System.out.println(param);
 		if(dao.insertWithReview(param)>0) {
+			System.out.println("서비스 insert시 Map 내용 : " + param);
 			System.out.println("서비스 -> insert 성공");
 			return true;
 		} else {
@@ -35,6 +35,16 @@ public class WithReviewService implements IWithReviewService{
 	@Override
 	public List<Map<String, Object>> selectAll() {
 		return dao.selectAll();
+	}
+
+	@Override 
+	public List<Map<String, Object>> getWithBoard(int with_board_num) {
+		return dao.selectByWithBoardNum(with_board_num);
+	}
+
+	@Override
+	public Map<String, Object> selectWithNum(int withnum) {
+		return dao.selectWithNum(withnum);
 	}
 
 }

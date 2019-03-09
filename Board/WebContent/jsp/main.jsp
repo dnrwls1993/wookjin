@@ -104,7 +104,7 @@
 <header class="hidden-xs" id="header">
     <div class="container">
        <div style="text-align: center;">
-			<h1><a id="nickName" href="main" style="text-decoration: none;">라온다님112321</a></h1>
+			<h1><a id="nickName" href="main" style="text-decoration: none;">라온다님</a></h1>
 		</div>
 		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
 	        <ul class="nav navbar-nav navbar-right" style="display: inline; float: right;">

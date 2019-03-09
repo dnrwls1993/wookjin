@@ -1,11 +1,18 @@
 package controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,7 +85,7 @@ public class ReviewController {
 			int num) {
 		System.out.println("리뷰보기");
 		Map<String, Object> rev = service.selectOne(num);
-		System.out.println(rev);
+//		System.out.println(rev);
 		model.addAttribute("review", rev);
 		return "reviewView"; 
 	}
@@ -90,13 +97,22 @@ public class ReviewController {
 	
 //------------------------------ 동행 후기 시작 --------------------------------------//
 	//회원 동행 후기 게시판
+	
 	@RequestMapping("/withBoard")
-	public String withBoard(Model model,
-			int num) {
-		System.out.println("회원의 여행후기");
-		Map<String, Object> rev = service.selectOne(num);
-		System.out.println(rev);
-		model.addAttribute("review", rev);
+	public String withBoard(Model model, 
+			HttpServletRequest req,
+			@RequestParam (value="num") int num) {
+
+		System.out.println(num + "회원의 동행 후기");
+		
+		HttpSession session = req.getSession();
+		session.setAttribute("num", num);
+		int with_board_num = num;
+		Map<String, Object> rev1 = service.selectOne(num);
+		List<Map<String, Object>> rev2 = withService.getWithBoard(with_board_num);
+		model.addAttribute("review", rev1);
+		model.addAttribute("withReview", rev2);
+		
 		return "reviewBoard"; 
 	}
 	
@@ -104,30 +120,66 @@ public class ReviewController {
 	@RequestMapping("/withWriteForm")
 	public String withWriteForm() {
 		System.out.println("동행 후기 작성");
-		return "redirect:withWrite";
+		return "withWrite";
 	}
 	
 	//여행 후기 작성
-	@RequestMapping("/withWrite")
+	@RequestMapping("/withWrite1")
 	public String withWrite(
-			@RequestParam(value="avgscore") int avgscore,
+			@RequestParam(required=false) int avgscore,
 			@RequestParam(value="withcontent") String withcontent,
-			RedirectAttributes ra
-			) {
-		System.out.println("동행후기를 작성하세요");
-			
+			RedirectAttributes ra,
+			HttpServletRequest req) {
+		System.out.println("동행후기 저장 중...");
+		HttpSession session = req.getSession();
+		
+		int num = (int) session.getAttribute("num");
+		
 		Map<String, Object> review = new HashMap<>();
 		review.put("avgscore", avgscore);
 		review.put("withcontent", withcontent);
-			
+		review.put("with_board_num", num);
+		
 		if(withService.insertWithReview(review)) {
 			System.out.println("작성 성공");
-			ra.addAttribute("num", review.get("NUM"));
+			ra.addAttribute("num", num);
 		} else {
 			System.out.println("작성 실패");
 		}
-		return "redirect:reviewBoard";
+		return "redirect:reviewView02";
 	}
+	
+	//여행 후기 상세 페이지
+	@RequestMapping("/reviewView02")
+	public String reviewView02(Model model,
+			@RequestParam (value="num") int num,
+			@RequestParam (value="withnum") int withnum
+			) {
+		
+//		int withnum = num;
+
+		System.out.println(withnum + "님이 남긴" + " " + num + "의 동행 후기 게시판 보기");
+		
+		Map<String, Object> rev = service.selectOne(num);
+		model.addAttribute("review", rev);
+//		System.out.println("rev :"+rev);
+		
+//		List<Map<String, Object>> rev2 = withService.getWithBoard(withnum);
+//		model.addAttribute("withReview", rev2);
+//		System.out.println("rev2 :"+rev2);
+		
+//		Map<String, Object> rev4 = withService.selectWithNum(withnum);
+//		model.addAttribute("withReview", rev4);
+//		System.out.println("rev4 : " + rev4);
+		
+		Map<String, Object> rev3 = withService.selectOne(withnum);
+//		model.addAttribute("withnum", withnum);
+		model.addAttribute("withReview", rev3);
+		System.out.println("withReview :"+rev3);
+		 
+		return "reviewView02"; 
+	}
+	
 //------------------------------ 동행 후기 끝 --------------------------------------//
 	
 
